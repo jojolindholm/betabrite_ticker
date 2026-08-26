@@ -1,3 +1,4 @@
+import argparse
 import serial
 import serial.tools.list_ports
 import time
@@ -71,22 +72,28 @@ def list_available_ports():
         print(f"  Hardware ID: {port.hwid}\n")
 
 def main():
-    try:
-        # List available ports first
+    p = argparse.ArgumentParser(
+        description="Send a message to a serial-connected BetaBrite display"
+    )
+    p.add_argument("--port", "-p", default="/dev/tty.usbserial-1",
+                   help="Serial port (default: /dev/tty.usbserial-1). "
+                        "On Windows use e.g. COM3.")
+    p.add_argument("--message", "-m", default="Hello World!",
+                   help="Message to display (default: Hello World!)")
+    p.add_argument("--list-ports", action="store_true",
+                   help="List available serial ports and exit")
+    args = p.parse_args()
+
+    if args.list_ports:
         list_available_ports()
-        
-        # Create BetaBrite instance
-        # Note: Change port if necessary (Windows might use 'COM1', etc.)
-        display = BetaBrite(port='/dev/tty.usbserial-1')
-        
-        # Write a test message
-        display.write_message("Hello World!")
-        
-        # Close the connection
+        return
+
+    try:
+        display = BetaBrite(port=args.port)
+        display.write_message(args.message)
         display.close()
-        
     except serial.SerialException as e:
-        print(f"Error: Could not connect to BetaBrite display: {e}")
+        print(f"Error: Could not connect to BetaBrite display on {args.port}: {e}")
     except Exception as e:
         print(f"Error: {e}")
 

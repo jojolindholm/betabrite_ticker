@@ -9,14 +9,11 @@ Drive a **Betabrite 1196** LED display as a news ticker. Pulls headlines from RS
   ```bash
   brew install libusb
   ```
-- **pyusb** (Python USB wrapper):
-  ```bash
-  pip install pyusb
-  ```
-- **pyserial** (only for serial-connected signs):
-  ```bash
-  pip install pyserial
-  ```
+Install Python dependencies:
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Hardware
 
@@ -86,10 +83,15 @@ python -c "import betabrite_usb as bb; bb.write_message('Hello World!', mode='RO
 ### 4. Serial sign (alternative hardware)
 
 ```bash
-python betabrite_serial.py
-```
+# List available ports first
+python betabrite_serial.py --list-ports
 
-Edit the port in the script if needed (e.g. `COM1` on Windows).
+# Send a message on a specific port
+python betabrite_serial.py --port /dev/tty.usbserial-123 --message "Hello!"
+
+# Windows example
+python betabrite_serial.py --port COM3
+```
 
 ## Display Modes
 
