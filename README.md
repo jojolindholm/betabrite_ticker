@@ -22,7 +22,7 @@ Drive a **Betabrite 1196** LED display as a news ticker. Pulls headlines from RS
 
 This project targets the Betabrite 1196 with a **USB-BULK interface** (VID `0x8765`, PID `0x1234`, "ADAPTIVE USB-BULK Device"). It communicates using the **Alpha Sign Communications Protocol** over USB bulk transfers.
 
-If your sign uses a serial port (RS-232 / USB-serial adapter), use `betabrite_2025_0_1.py` instead.
+If your sign uses a serial port (RS-232 / USB-serial adapter), use `betabrite_serial.py` instead.
 
 ## Files
 
@@ -31,7 +31,7 @@ If your sign uses a serial port (RS-232 / USB-serial adapter), use `betabrite_20
 | `betabrite_usb.py` | Core library — USB protocol driver for the Betabrite 1196 (pyusb) |
 | `news_ticker.py` | RSS news ticker — fetches headlines and scrolls them on the sign |
 | `setup_memory.py` | One-shot utility — configure the sign's memory allocation |
-| `betabrite_2025_0_1.py` | Serial-based driver (pyserial) for RS-232 connected signs |
+| `betabrite_serial.py` | Serial-based driver (pyserial) for RS-232 connected signs |
 
 ## Usage
 
@@ -86,7 +86,7 @@ python -c "import betabrite_usb as bb; bb.write_message('Hello World!', mode='RO
 ### 4. Serial sign (alternative hardware)
 
 ```bash
-python betabrite_2025_0_1.py
+python betabrite_serial.py
 ```
 
 Edit the port in the script if needed (e.g. `COM1` on Windows).
