@@ -27,6 +27,8 @@ If your sign uses a serial port (RS-232 / USB-serial adapter), use `betabrite_se
 |---|---|
 | `betabrite_usb.py` | Core library — USB protocol driver for the Betabrite 1196 (pyusb) |
 | `news_ticker.py` | RSS news ticker — fetches headlines and scrolls them on the sign |
+| `ticker_app.py` | macOS menu bar app — auto-starts/stops the ticker as the sign is plugged in/out |
+| `install_login_item.py` | Installs a LaunchAgent so the menu bar app auto-launches at login |
 | `setup_memory.py` | One-shot utility — configure the sign's memory allocation |
 | `betabrite_serial.py` | Serial-based driver (pyserial) for RS-232 connected signs |
 
@@ -92,6 +94,34 @@ python betabrite_serial.py --port /dev/tty.usbserial-123 --message "Hello!"
 # Windows example
 python betabrite_serial.py --port COM3
 ```
+
+## Menu Bar App (macOS)
+
+A small menu bar app that runs the ticker hands-free. It watches for the
+Betabrite over USB and auto-starts the news ticker when the sign is plugged
+in, and stops it when it's unplugged. No terminal needed.
+
+    # Run it — a 📟 appears in the menu bar
+    python ticker_app.py
+
+Clicking the icon shows:
+
+- **Status** — running / display connected / no display / last error.
+- **Auto-run on connect** — toggle (default on).
+- **Start ticker / Stop ticker** — manual overrides.
+- **Quit**.
+
+### Auto-launch at login
+
+Have it start when you log in (and restart if it ever quits):
+
+    python install_login_item.py               # install
+    python install_login_item.py --uninstall    # remove
+
+Logs: `~/Library/Logs/betabrite-ticker/`.
+
+> Requires `rumps` (already in `requirements.txt`). It uses PyObjC for the
+> menu bar and runs on the same Python + pyusb setup as the CLI tools.
 
 ## Display Modes
 

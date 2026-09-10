@@ -1,2 +1,3 @@
 pyusb>=1.2.0
 pyserial>=3.5
+rumps>=0.4.0
